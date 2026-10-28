@@ -9,3 +9,8 @@ Une page unique, sans dépendance : tout tient dans `index.html`
 
 Pour modifier les informations (prénoms, date, adresse, téléphone) :
 ouvre `index.html` et cherche `const INVITATION`, tout en haut du script.
+
+## Mise en ligne
+
+Le site est servi par GitHub Pages depuis la branche `main`, à la racine.
+Réglage : *Settings → Pages → Source : Deploy from a branch → main → / (root)*.
