@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#2a1b3d" />
+  <!-- La page n'est pas référencée dans les moteurs de recherche :
+       elle n'est trouvable que par les personnes qui ont le lien. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Miya &amp; Neyl — Invitation anniversaire 🐉🦄</title>
+
+  <!-- Une police ronde et joyeuse. Si elle ne se charge pas (pas de
+       connexion), la page utilise automatiquement la police du téléphone. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+/* ============================================================
+   INVITATION ANNIVERSAIRE — MIYA & NEYL
+   Thème « Dragons & Licornes ».
+   Tout est dessiné en CSS ou en SVG : aucune image à télécharger.
+   ============================================================ */
+
+/* ---------- 1. LES COULEURS ET LES POLICES ---------- */
+:root {
+  /* Côté dragon (Neyl) */
+  --vert:        #1f7a4d;
+  --vert-fonce:  #0d4a2f;
+  --vert-clair:  #3aa06a;
+  --ocre:        #c98b3a;
+  --turquoise:   #2bb3a3;
+
+  /* Côté licorne (Miya) */
+  --rose:        #f7c6dc;
+  --rose-fonce:  #d2497f;
+  --lilas:       #c9b6f2;
+  --violet:      #7a4fc4;
+  --dore:        #d99b1f;
+  --ciel:        #cfe6ff;
+
+  /* Textes et papier */
+  --encre:       #2d1b40;
+  --encre-doux:  #5a4a72;
+  --papier:      #fffdfe;
+
+  /* Police ronde, avec une solution de secours si elle ne charge pas */
+  --titrage: "Fredoka", "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
+  --courant: "Fredoka", "Trebuchet MS", "Segoe UI", Verdana, sans-serif;
+
+  /* Avancement du défilement (0 → 1), calculé par le JavaScript */
+  --fusion: 0;
+}
+
+/* ---------- 2. RÉGLAGES GÉNÉRAUX ---------- */
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; height: 100%; }
+
+body {
+  font-family: var(--courant);
+  font-size: 16px;
+  color: var(--encre);
+  background: radial-gradient(circle at 30% 20%, #3b2a5e, #17102b 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ---------- 3. LE FAUX TÉLÉPHONE ---------- */
+.cadre-telephone {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: #f6f2ff;
+}
+
+.encoche { display: none; }
+
+@media (min-width: 720px) and (min-height: 620px) {
+  .cadre-telephone {
+    width: 390px;
+    height: min(844px, 94vh);
+    border: 12px solid #17102b;
+    border-radius: 46px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, .55),
+                0 0 0 2px rgba(255, 255, 255, .08) inset;
+  }
+  .encoche {
+    display: block;
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 120px; height: 24px;
+    background: #17102b;
+    border-radius: 0 0 16px 16px;
+    z-index: 30;
+  }
+}
+
+/* ---------- 4. LE DÉCOR EN DIAGONALE ---------- */
+.decor { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.cote  { position: absolute; inset: 0; }
+
+.cote-neyl {
+  background: linear-gradient(160deg, var(--turquoise) 0%, var(--vert-clair) 35%, var(--vert-fonce) 100%);
+  clip-path: polygon(0 0, 64% 0, 36% 100%, 0 100%);
+}
+.cote-miya {
+  background: linear-gradient(200deg, var(--ciel) 0%, var(--rose) 55%, var(--lilas) 100%);
+  clip-path: polygon(64% 0, 100% 0, 100% 100%, 36% 100%);
+}
+.separation {
+  position: absolute; inset: 0;
+  background: rgba(255, 255, 255, .9);
+  clip-path: polygon(64% 0, 65.6% 0, 37.6% 100%, 36% 100%);
+  opacity: calc(1 - var(--fusion));
+}
+.voile-fusion {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255, 225, 240, .55), rgba(205, 230, 255, .65));
+  opacity: var(--fusion);
+}
+.arc-en-ciel {
+  position: absolute;
+  left: 50%; bottom: 12%;
+  width: 132%;
+  opacity: calc(var(--fusion) * .9);
+  transform: translateX(-50%) translateY(calc((1 - var(--fusion)) * 30%));
+}
+
+/* ---------- 5. LES ÉLÉMENTS QUI FLOTTENT ---------- */
+.flotteur { position: absolute; opacity: .75; animation: flotter 9s ease-in-out infinite; }
+
+.nuage {
+  width: 70px; height: 24px;
+  background: rgba(255, 255, 255, .85);
+  border-radius: 20px;
+}
+.nuage::before, .nuage::after { content: ""; position: absolute; background: inherit; border-radius: 50%; }
+.nuage::before { width: 32px; height: 32px; top: -14px; left: 12px; }
+.nuage::after  { width: 24px; height: 24px; top: -10px; right: 12px; }
+
+.n1 { top: 12%; right: 8%;  animation-duration: 11s; }
+.n2 { top: 34%; right: 22%; animation-duration: 14s; transform: scale(.7); }
+.n3 { top: 62%; right: 6%;  animation-duration: 9s;  transform: scale(.85); }
+
+.etoile { color: #fff6c8; font-size: 22px; text-shadow: 0 0 10px rgba(255, 244, 190, .9); }
+.e1 { top: 22%; right: 34%; animation-duration: 7s; }
+.e2 { top: 52%; right: 14%; animation-duration: 10s; font-size: 16px; }
+.e3 { top: 76%; right: 30%; animation-duration: 8s; font-size: 26px; }
+
+.fougere { font-size: 34px; }
+.f1 { bottom: 8%;  left: 4%;  animation-duration: 10s; }
+.f2 { bottom: 26%; left: 12%; animation-duration: 13s; font-size: 26px; }
+.f3 { top: 16%;    left: 8%;  animation-duration: 8s;  font-size: 28px; }
+
+@keyframes flotter {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-14px) rotate(3deg); }
+}
+
+/* ---------- 6. LA BARRE D'AVANCEMENT ---------- */
+.barre {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 7px;
+  z-index: 26;
+  background: rgba(45, 27, 64, .22);
+}
+.jauge {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #ff9aa2, #ffd59e, #fdf0a0, #b5ecd0, #a8d5ff, #cbb6f5);
+  border-radius: 0 6px 6px 0;
+  transition: width .15s linear;
+}
+
+/* ---------- 7. LA PISTE D'EMPREINTES ---------- */
+.piste {
+  position: absolute;
+  top: 7%; left: 5px; bottom: 7%;
+  width: 24px;
+  z-index: 12;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  pointer-events: none;
+}
+.pas {
+  font-size: 15px;
+  line-height: 1;
+  opacity: 0;
+  transform: scale(.3) rotate(-25deg);
+  transition: opacity .45s ease, transform .45s ease;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .35));
+}
+.pas.vue { opacity: .95; transform: scale(1) rotate(0deg); }
+
+/* ---------- 8. L'ÉCRAN QUI DÉFILE ---------- */
+.ecran {
+  position: relative;
+  z-index: 10;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;   /* les sections s'alignent gentiment */
+  -webkit-overflow-scrolling: touch;
+}
+
+.scene {
+  min-height: 100%;
+  padding: 34px 16px 30px 34px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  position: relative;
+  scroll-snap-align: start;
+}
+
+/* La « bulle » de papier, façon autocollant */
+.bulle {
+  background: var(--papier);
+  border-radius: 28px;
+  padding: 22px 18px;
+  width: 100%;
+  max-width: 332px;
+  text-align: center;
+  border: 3px solid #fff;
+  box-shadow: 0 18px 36px rgba(30, 12, 60, .26);
+}
+.bulle-large { max-width: 340px; }
+
+/* ---------- 9. L'APPARITION DES SECTIONS ---------- */
+[data-anim] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+[data-anim].visible { opacity: 1; transform: translateY(0); }
+
+/* ---------- 10. LE BOUTON « SECTION SUIVANTE » ----------
+   C'est le fil rouge : à la fin de chaque écran, un bouton dit
+   clairement ce qu'il y a en dessous. */
+.suivant {
+  font-family: var(--titrage);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--encre);
+  background: rgba(255, 255, 255, .94);
+  border: 3px solid #fff;
+  border-radius: 999px;
+  padding: 13px 22px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(30, 12, 60, .28);
+  animation: appel 2.4s ease-in-out infinite;
+}
+.suivant::after { content: " ↓"; }
+.suivant-haut::after { content: ""; }
+.suivant-fort {
+  background: linear-gradient(135deg, var(--violet), var(--rose-fonce));
+  color: #fff;
+  border-color: rgba(255, 255, 255, .85);
+}
+.suivant-clair { background: rgba(45, 27, 64, .72); color: #fff; border-color: rgba(255,255,255,.6); }
+.suivant-haut {
+  margin-top: 14px;
+  font-size: .95rem;
+  background: none;
+  border: none;
+  box-shadow: none;
+  color: var(--encre-doux);
+  animation: none;
+}
+
+@keyframes appel {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(7px); }
+}
+
+/* ---------- 11. L'ŒUF ---------- */
+.scene-oeuf { justify-content: center; gap: 16px; }
+
+.consigne {
+  background: rgba(45, 27, 64, .62);
+  padding: 10px 18px 12px;
+  border-radius: 22px;
+  text-align: center;
+  animation: respirer 2.2s ease-in-out infinite;
+}
+.consigne-texte { margin: 0; font-size: 1.1rem; font-weight: 600; color: #fff; }
+.consigne.parti { opacity: 0; transition: opacity .4s ease; }
+
+/* Les trois points qui se remplissent à chaque tape */
+.coups { display: flex; justify-content: center; gap: 9px; margin-top: 8px; }
+.coup {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .85);
+  background: transparent;
+  transition: background .25s ease, transform .25s ease;
+}
+.coup.fait { background: #fdf0a0; transform: scale(1.25); }
+
+@keyframes respirer {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+.bouton-oeuf {
+  background: none; border: none; padding: 0;
+  cursor: pointer;
+  width: min(66vw, 215px);
+  animation: flotter 5s ease-in-out infinite;
+}
+.svg-oeuf { width: 100%; height: auto; display: block; overflow: visible; }
+
+.fissure {
+  fill: none;
+  stroke: #4a2f22;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+.bouton-oeuf.tap1 .f1,
+.bouton-oeuf.tap2 .f1, .bouton-oeuf.tap2 .f2,
+.bouton-oeuf.tap3 .f1, .bouton-oeuf.tap3 .f2, .bouton-oeuf.tap3 .f3 { opacity: .9; }
+
+.bouton-oeuf.secoue { animation: secouer .4s ease; }
+@keyframes secouer {
+  0%, 100% { transform: translateX(0) rotate(0); }
+  20% { transform: translateX(-7px) rotate(-4deg); }
+  45% { transform: translateX(7px) rotate(4deg); }
+  70% { transform: translateX(-4px) rotate(-2deg); }
+}
+
+.coquille {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 100px 130px;
+}
+.bouton-oeuf.ouvert { animation: none; }
+.bouton-oeuf.ouvert .oeuf-entier { opacity: 0; transition: opacity .2s ease; }
+.bouton-oeuf.ouvert .coquille-haut { animation: envol-haut 1.7s ease-out forwards; }
+.bouton-oeuf.ouvert .coquille-bas  { animation: envol-bas  1.7s ease-out forwards; }
+
+@keyframes envol-haut {
+  0%   { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  60%  { opacity: 1; transform: translate(-52px, -132px) rotate(-46deg); }
+  100% { opacity: 0; transform: translate(-72px, -190px) rotate(-72deg); }
+}
+@keyframes envol-bas {
+  0%   { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  60%  { opacity: 1; transform: translate(46px, 118px) rotate(34deg); }
+  100% { opacity: 0; transform: translate(66px, 176px) rotate(58deg); }
+}
+
+.revelation {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100%;
+  padding: 0 18px;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.5);
+  transition: opacity .7s ease .35s, transform .8s cubic-bezier(.2, 1.6, .4, 1) .35s;
+  pointer-events: none;
+  text-align: center;
+}
+.revelation.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+
+.revelation-prenoms {
+  margin: 0;
+  font-family: var(--titrage);
+  font-size: clamp(2rem, 9.5vw, 2.7rem);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 3px 0 var(--rose-fonce), 0 7px 18px rgba(0, 0, 0, .45);
+}
+.revelation-suite { margin: 6px 0 18px; font-size: 1.15rem; font-weight: 600; color: #fff;
+                    text-shadow: 0 2px 8px rgba(0, 0, 0, .5); }
+
+/* ---------- 12. LES TITRES ET LES TEXTES ---------- */
+.etape {
+  margin: 0 0 10px;
+  display: inline-block;
+  font-size: .9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--violet);
+  background: #f1ebff;
+  padding: 5px 13px;
+  border-radius: 999px;
+}
+
+.etiquette {
+  margin: 0 0 12px;
+  font-family: var(--titrage);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--encre);
+}
+
+.titre {
+  margin: 0 0 4px;
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  font-family: var(--titrage);
+  font-size: clamp(2rem, 11vw, 2.7rem);
+  line-height: 1.08;
+}
+.prenom {
+  font: inherit; font-weight: 700;
+  border: none; background: none; padding: 0 4px;
+  cursor: pointer;
+}
+.prenom-dino    { color: var(--vert); }
+.prenom-licorne { color: var(--rose-fonce); }
+.prenom.rebond  { animation: rebondir .55s cubic-bezier(.28, 1.8, .4, 1); }
+@keyframes rebondir {
+  0%   { transform: scale(1) rotate(0); }
+  35%  { transform: scale(1.28) rotate(-5deg); }
+  65%  { transform: scale(.94) rotate(4deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+.esperluette { color: var(--dore); font-size: .62em; }
+
+.nom-famille {
+  margin: 0;
+  letter-spacing: 5px;
+  font-size: .95rem;
+  color: var(--encre-doux);
+  text-transform: uppercase;
+}
+.sous-titre {
+  margin: 12px 0 0;
+  font-family: var(--titrage);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+.phrase { margin: 6px 0 16px; font-size: 1.05rem; line-height: 1.5; color: var(--encre-doux); }
+.regle  { margin: 0 0 14px; font-size: 1rem; line-height: 1.45; color: var(--encre-doux); }
+
+/* ---------- 13. LA DATE, BIEN VISIBLE ---------- */
+.date-cle {
+  margin: 18px 0 0;
+  padding: 16px 10px 14px;
+  border-radius: 22px;
+  background: linear-gradient(170deg, #fff6fb, #f1ebff);
+  border: 3px dashed var(--lilas);
+}
+.jour-semaine {
+  margin: 0;
+  font-family: var(--titrage);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--vert);
+}
+.gros-jour {
+  margin: -4px 0;
+  font-family: var(--titrage);
+  font-size: clamp(4rem, 23vw, 5.6rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--rose-fonce);
+  text-shadow: 0 5px 0 rgba(201, 182, 242, .55);
+}
+.mois-annee {
+  margin: 4px 0 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.horaire {
+  margin: 12px 0 0;
+  display: inline-block;
+  font-size: 1.15rem;
+  font-weight: 700;
+  background: #fdf0a0;
+  padding: 8px 18px;
+  border-radius: 999px;
+}
+.invitation { margin: 16px 0 0; font-size: 1.05rem; font-weight: 600; color: var(--vert); }
+
+/* ---------- 14. LE LIEU ET LES BOUTONS ---------- */
+.lieu {
+  margin: 0 0 18px;
+  font-family: var(--titrage);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+.bouton {
+  display: inline-block;
+  font-family: var(--titrage);
+  text-decoration: none;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #fff;
+  padding: 14px 22px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, .18);
+  transition: transform .14s ease, box-shadow .14s ease;
+}
+.bouton:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0, 0, 0, .18); }
+
+.bouton-plan    { background: linear-gradient(135deg, var(--vert-clair), var(--vert)); }
+.bouton-sms     { background: linear-gradient(135deg, var(--rose-fonce), var(--violet)); }
+.bouton-fete    { background: linear-gradient(135deg, var(--ocre), var(--dore)); margin-top: 16px; }
+.bouton-jouer   { background: linear-gradient(135deg, var(--violet), #4f7ad4); margin-top: 12px; }
+.bouton-rejouer { background: linear-gradient(135deg, #8a7bb8, #6c5ca0); margin-top: 12px; font-size: .95rem; }
+
+.lien-discret { display: block; margin-top: 12px; font-size: .98rem; color: var(--encre-doux); }
+
+/* ---------- 15. LE PROGRAMME ---------- */
+.programme { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.carte-prog {
+  display: flex; align-items: center; gap: 12px;
+  text-align: left;
+  font-size: 1.02rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #fff, #fdf3ff);
+  border: 2px solid var(--rose);
+  border-radius: 18px;
+  padding: 11px 13px;
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity .6s ease, transform .6s ease;
+  transition-delay: calc(var(--i) * 150ms);
+}
+.visible .carte-prog { opacity: 1; transform: translateX(0); }
+.carte-prog .emoji { font-size: 1.7rem; }
+.deguisement { margin: 16px 0 0; font-size: .98rem; line-height: 1.5; color: var(--encre-doux); }
+
+/* ---------- 16. JEU 1 : LE MEMORY ---------- */
+.memory {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.carte-memo {
+  aspect-ratio: 1 / 1.15;
+  font-size: 2rem;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  background: linear-gradient(145deg, var(--violet), #5b3fa0);
+  color: transparent;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, .2);
+  transition: transform .25s ease, background .25s ease;
+}
+.carte-memo::before { content: "?"; color: #fff; font-weight: 700; }
+.carte-memo.retournee, .carte-memo.trouvee {
+  background: linear-gradient(145deg, #fff, #ffeef7);
+  color: inherit;
+  transform: rotateY(0) scale(1.03);
+}
+.carte-memo.retournee::before, .carte-memo.trouvee::before { content: ""; }
+.carte-memo.trouvee { box-shadow: 0 0 0 3px #7bd389 inset; cursor: default; }
+
+.score { margin: 0; font-size: 1.02rem; font-weight: 600; color: var(--encre-doux); }
+.score.gagne { color: var(--vert); font-size: 1.1rem; }
+
+/* ---------- 17. JEU 2 : ATTRAPE LES ÉTOILES ---------- */
+.aire {
+  position: relative;
+  height: 230px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #2b1f52, #4a3380);
+  overflow: hidden;
+  margin-bottom: 12px;
+  touch-action: manipulation;
+}
+.aire-message {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 14px;
+}
+.cible {
+  position: absolute;
+  font-size: 2.1rem;
+  line-height: 1;
+  background: none;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  animation: surgir .3s ease;
+}
+.cible.touchee { animation: disparaitre .3s ease forwards; pointer-events: none; }
+
+@keyframes surgir     { from { transform: scale(0); } to { transform: scale(1); } }
+@keyframes disparaitre{ to   { transform: scale(2); opacity: 0; } }
+
+.tableau-score {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* ---------- 18. JEU 3 : COLORIE LE DRAGON ---------- */
+.dragon-colo {
+  width: 100%;
+  height: auto;
+  margin: 4px 0 6px;
+  background: #fff8fd;
+  border-radius: 18px;
+  border: 2px solid var(--rose);
+}
+.dragon-colo .zone {
+  fill: #ece6f5;
+  stroke: #4b3a63;
+  stroke-width: 3;
+  stroke-linejoin: round;
+  cursor: pointer;
+  transition: fill .25s ease;
+}
+.dragon-colo .zone:active { opacity: .8; }
+/* Pas de rectangle noir autour des formes : au clavier, on épaissit
+   le trait du dessin, c'est visible ET joli. */
+.dragon-colo .zone:focus { outline: none; }
+.dragon-colo .zone:focus-visible { outline: none; stroke-width: 7; }
+.museau      { fill: #ffd8ea; stroke: #4b3a63; stroke-width: 3; }
+.narine      { fill: #4b3a63; }
+.oeil-blanc  { fill: #fff; stroke: #4b3a63; stroke-width: 2.5; }
+.oeil-noir   { fill: #4b3a63; }
+.sourire-dragon { fill: none; stroke: #4b3a63; stroke-width: 3; stroke-linecap: round; }
+
+/* ---------- 19. JEU 4 : COMPTE LES LICORNES ---------- */
+.champ {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  min-height: 118px;
+  align-content: center;
+  padding: 12px 8px;
+  margin-bottom: 14px;
+  border-radius: 18px;
+  background: linear-gradient(160deg, #eafff4, #f3ecff);
+  border: 2px solid var(--lilas);
+}
+.champ span { font-size: 1.9rem; line-height: 1; }
+
+.reponses { display: flex; justify-content: center; gap: 10px; margin-bottom: 12px; }
+.reponse {
+  font-family: var(--titrage);
+  font-size: 1.5rem;
+  font-weight: 700;
+  width: 62px; height: 56px;
+  border: 3px solid var(--violet);
+  border-radius: 16px;
+  background: #fff;
+  color: var(--violet);
+  cursor: pointer;
+}
+.reponse.juste { background: #7bd389; border-color: #4ea35e; color: #fff; }
+.reponse.faux  { background: #ffb3b3; border-color: #d96a6a; color: #fff; }
+
+/* ---------- 20. LE COMPTE À REBOURS (LA FIN) ---------- */
+.rebours { display: flex; justify-content: center; gap: 8px; }
+.case {
+  flex: 1;
+  background: linear-gradient(180deg, #fff, #f3ecff);
+  border: 2px solid var(--lilas);
+  border-radius: 16px;
+  padding: 12px 4px;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.chiffre {
+  font-family: var(--titrage);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--rose-fonce);
+  font-variant-numeric: tabular-nums;
+}
+.unite { font-size: .95rem; color: var(--encre-doux); }
+.chiffre.pulse { animation: pulser .5s ease; }
+@keyframes pulser {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.3); color: var(--vert); }
+  100% { transform: scale(1); }
+}
+.secondes { margin: 12px 0 0; font-size: .98rem; color: var(--encre-doux); }
+
+.rappel-date {
+  margin: 16px 0 0;
+  padding: 12px;
+  border-radius: 16px;
+  background: #fdf0a0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.mot-fin { margin: 18px 0 0; font-family: var(--titrage); font-size: 1.5rem; font-weight: 700; color: var(--vert); }
+.signature { margin: 8px 0 0; font-size: 1.1rem; line-height: 1.5; color: var(--rose-fonce); font-weight: 600; }
+
+.duo { display: flex; justify-content: center; gap: 6px; margin-top: 10px; }
+.mascotte { width: 46%; height: auto; }
+.dino    { animation: sautiller 2.2s ease-in-out infinite; }
+.licorne { animation: sautiller 2.2s ease-in-out infinite .6s; }
+@keyframes sautiller {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  30%      { transform: translateY(-10px) rotate(-3deg); }
+  60%      { transform: translateY(0) rotate(2deg); }
+}
+
+.d-corps { fill: var(--vert-clair); stroke: var(--vert-fonce); stroke-width: 3; }
+.d-patte { fill: var(--vert); }
+.d-pics  { fill: var(--ocre); }
+.d-corne { fill: var(--ocre); }
+.d-aile  { fill: #6fcf9a; stroke: var(--vert-fonce); stroke-width: 2.5; }
+.d-queue { fill: none; stroke: var(--vert-clair); stroke-width: 13; stroke-linecap: round; }
+.l-corps { fill: #fbf7ff; stroke: #a98fe0; stroke-width: 3; }
+.l-patte { fill: #e9dcff; stroke: #a98fe0; stroke-width: 2; }
+.l-oreille { fill: #fbf7ff; stroke: #a98fe0; stroke-width: 2; }
+.l-corne { fill: var(--dore); }
+.l-queue { fill: none; stroke: var(--rose); stroke-width: 11; stroke-linecap: round; }
+.criniere path { fill: none; stroke-width: 7; stroke-linecap: round; }
+.oeil { fill: #fff; stroke: var(--encre); stroke-width: 2; }
+.pupille { fill: var(--encre); }
+.sourire { fill: none; stroke: var(--encre); stroke-width: 2.5; stroke-linecap: round; }
+.joue { fill: rgba(255, 140, 140, .45); }
+.joue-rose { fill: rgba(233, 120, 170, .4); }
+
+/* ---------- 21. LES CONFETTIS ---------- */
+.confettis { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 25; }
+.confetti {
+  position: absolute;
+  width: 10px; height: 14px;
+  border-radius: 2px;
+  animation: tomber linear forwards;
+}
+@keyframes tomber {
+  0%   { opacity: 1; transform: translate(0, 0) rotate(0deg); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(var(--tour)); }
+}
+
+/* ---------- 22. LE BOUTON SON ---------- */
+.bouton-son {
+  position: absolute;
+  right: 12px; bottom: 14px;
+  z-index: 28;
+  width: 48px; height: 48px;
+  font-size: 1.3rem;
+  border: 2px solid rgba(255, 255, 255, .9);
+  border-radius: 50%;
+  background: rgba(45, 27, 64, .6);
+  color: #fff;
+  cursor: pointer;
+}
+.bouton-son[aria-pressed="true"] { background: var(--rose-fonce); }
+
+/* ---------- 23. ACCESSIBILITÉ ---------- */
+:focus-visible { outline: 3px solid var(--violet); outline-offset: 3px; }
+
+/* Si le téléphone est réglé sur « réduire les animations », on calme tout. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+  .ecran { scroll-behavior: auto; scroll-snap-type: none; }
+  [data-anim] { opacity: 1; transform: none; }
+  .carte-prog { opacity: 1; transform: none; }
+}
+
+  </style>
+
+  <!-- L'icône de l'onglet et de l'écran d'accueil (ajoutées par le JS) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Miya &amp; Neyl fêtent leurs 5 ans 🐉🦄" />
+  <meta property="og:description" content="Samedi 21 novembre 2026, de 15h00 à 17h30. On t'attend !" />
+  <meta property="og:image" content="https://diezzoul.github.io/invitation-miya-neyl/apercu.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://diezzoul.github.io/invitation-miya-neyl/" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="description" content="Invitation à l'anniversaire des jumeaux Miya &amp; Neyl, samedi 21 novembre 2026." />
+</head>
+<body>
+
+<div class="cadre-telephone" id="cadre">
+
+  <div class="encoche" aria-hidden="true"></div>
+
+  <!-- ====== LE DÉCOR, FIXE DERRIÈRE LE TEXTE ====== -->
+  <div class="decor" aria-hidden="true">
+    <div class="cote cote-neyl"></div>
+    <div class="cote cote-miya"></div>
+    <div class="separation"></div>
+    <div class="voile-fusion"></div>
+
+    <svg class="arc-en-ciel" viewBox="0 0 200 120">
+      <g fill="none" stroke-width="9" stroke-linecap="round">
+        <path d="M10,115 A90,90 0 0 1 190,115" stroke="#ff9aa2" />
+        <path d="M24,115 A76,76 0 0 1 176,115" stroke="#ffd59e" />
+        <path d="M38,115 A62,62 0 0 1 162,115" stroke="#fdf0a0" />
+        <path d="M52,115 A48,48 0 0 1 148,115" stroke="#b5ecd0" />
+        <path d="M66,115 A34,34 0 0 1 134,115" stroke="#a8d5ff" />
+        <path d="M80,115 A20,20 0 0 1 120,115" stroke="#cbb6f5" />
+      </g>
+    </svg>
+
+    <div class="flotteur nuage n1"></div>
+    <div class="flotteur nuage n2"></div>
+    <div class="flotteur nuage n3"></div>
+    <div class="flotteur etoile e1">✦</div>
+    <div class="flotteur etoile e2">✧</div>
+    <div class="flotteur etoile e3">✦</div>
+    <div class="flotteur fougere f1">🌿</div>
+    <div class="flotteur fougere f2">🌿</div>
+    <div class="flotteur fougere f3">🍃</div>
+  </div>
+
+  <!-- ====== LA BARRE D'AVANCEMENT EN HAUT ======
+       Elle montre d'un coup d'œil où on en est dans l'invitation. -->
+  <div class="barre" aria-hidden="true"><span class="jauge" id="jauge"></span></div>
+
+  <!-- La piste d'empreintes qui se dessine à gauche -->
+  <div class="piste" id="piste" aria-hidden="true"></div>
+
+  <!-- La couche des confettis -->
+  <div class="confettis" id="confettis" aria-hidden="true"></div>
+
+  <!-- ====== L'ÉCRAN QUI DÉFILE ====== -->
+  <div class="ecran" id="ecran">
+
+    <!-- ========== 1. L'ŒUF À FAIRE ÉCLORE ========== -->
+    <section class="scene scene-oeuf" id="s1">
+      <div class="consigne" id="consigne">
+        <p class="consigne-texte" id="consigne-texte">Tape <strong>3 fois</strong> sur l'œuf&nbsp;👆</p>
+        <div class="coups" id="coups">
+          <span class="coup"></span><span class="coup"></span><span class="coup"></span>
+        </div>
+      </div>
+
+      <button class="bouton-oeuf" id="oeuf" aria-label="Taper sur l'œuf pour le faire éclore">
+        <svg class="svg-oeuf" viewBox="0 0 200 270">
+          <defs>
+            <linearGradient id="degradeOeuf" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"    stop-color="#45b17a" />
+              <stop offset="49.9%" stop-color="#1f7a4d" />
+              <stop offset="50%"   stop-color="#fce6f1" />
+              <stop offset="100%"  stop-color="#f4c2dd" />
+            </linearGradient>
+            <pattern id="ecailles" width="26" height="18" patternUnits="userSpaceOnUse">
+              <path d="M0,18 A13,15 0 0 1 26,18" fill="none" stroke="#0f5b38"
+                    stroke-width="2" opacity="0.4" />
+            </pattern>
+            <clipPath id="formeOeuf">
+              <path d="M100,26 C136,26 161,70 161,120 C170,174 140,234 100,234
+                       C60,234 30,174 39,120 C39,70 64,26 100,26 Z" />
+            </clipPath>
+            <clipPath id="clipHaut">
+              <polygon points="0,0 200,0 200,150 166,150 150,138 132,154 114,136
+                               96,154 78,138 60,154 44,140 34,150 0,150" />
+            </clipPath>
+            <clipPath id="clipBas">
+              <polygon points="0,150 34,150 44,140 60,154 78,138 96,154 114,136
+                               132,154 150,138 166,150 200,150 200,270 0,270" />
+            </clipPath>
+            <g id="oeufComplet">
+              <path d="M100,26 C136,26 161,70 161,120 C170,174 140,234 100,234
+                       C60,234 30,174 39,120 C39,70 64,26 100,26 Z"
+                    fill="url(#degradeOeuf)" stroke="#ffffff" stroke-width="3" />
+              <g clip-path="url(#formeOeuf)">
+                <rect x="26" y="14" width="74" height="240" fill="url(#ecailles)" />
+                <ellipse cx="74" cy="74" rx="11" ry="19" fill="#ffffff" opacity="0.22"
+                         transform="rotate(-22 74 74)" />
+                <g fill="#e3b64f">
+                  <circle cx="122" cy="74"  r="3.2" />
+                  <circle cx="140" cy="112" r="2.4" />
+                  <circle cx="118" cy="158" r="2.8" />
+                  <circle cx="134" cy="196" r="3.4" />
+                  <circle cx="112" cy="216" r="2.2" />
+                </g>
+                <ellipse cx="128" cy="72" rx="10" ry="18" fill="#ffffff" opacity="0.35"
+                         transform="rotate(18 128 72)" />
+              </g>
+            </g>
+          </defs>
+
+          <g class="oeuf-entier">
+            <use href="#oeufComplet" />
+            <path class="fissure f1" d="M54,124 l16,-12 l9,14 l17,-10" />
+            <path class="fissure f2" d="M104,118 l17,13 l14,-13 l15,10" />
+            <path class="fissure f3" d="M58,160 l19,11 l16,-14 l18,12 l18,-9" />
+          </g>
+
+          <g class="coquille coquille-haut">
+            <use href="#oeufComplet" clip-path="url(#clipHaut)" />
+          </g>
+          <g class="coquille coquille-bas">
+            <use href="#oeufComplet" clip-path="url(#clipBas)" />
+          </g>
+        </svg>
+      </button>
+
+      <div class="revelation" id="revelation">
+        <p class="revelation-prenoms" data-champ="prenoms"></p>
+        <p class="revelation-suite">Tu es invité&nbsp;!</p>
+        <button class="suivant suivant-clair" data-vers="s2">Voir l'invitation&nbsp;↓</button>
+      </div>
+    </section>
+
+    <!-- ========== 2. L'INVITATION + LA DATE EN GRAND ========== -->
+    <section class="scene" id="s2">
+      <div class="bulle" data-anim>
+        <p class="etape">Étape 1 sur 9</p>
+
+        <h1 class="titre">
+          <button class="prenom prenom-licorne" data-rebond type="button" data-champ="prenom1"></button>
+          <span class="esperluette">&amp;</span>
+          <button class="prenom prenom-dino" data-rebond type="button" data-champ="prenom2"></button>
+        </h1>
+        <p class="nom-famille" data-champ="nom"></p>
+        <p class="sous-titre">fêtent leurs <span data-champ="age"></span> ans&nbsp;!</p>
+
+        <!-- LA DATE, bien visible dès le début -->
+        <div class="date-cle">
+          <p class="jour-semaine" data-champ="jourSemaine"></p>
+          <p class="gros-jour" data-champ="jourNumero"></p>
+          <p class="mois-annee" data-champ="moisAnnee"></p>
+          <p class="horaire" data-champ="horaire"></p>
+        </div>
+
+      </div>
+      <button class="suivant" data-vers="s3">🏡 Où ça se passe&nbsp;?</button>
+    </section>
+
+    <!-- ========== 3. LE LIEU ========== -->
+    <section class="scene" id="s3">
+      <div class="bulle" data-anim>
+        <p class="etape">Étape 2 sur 9</p>
+        <p class="etiquette">🏡 L'adresse</p>
+        <p class="lieu" data-champ="lieu"></p>
+        <a class="bouton bouton-plan" id="lien-plan" href="#" target="_blank" rel="noopener">
+          🗺️ Voir le plan
+        </a>
+        <a class="lien-discret" id="lien-google" href="#" target="_blank" rel="noopener">
+          Ouvrir dans Google Maps
+        </a>
+      </div>
+      <button class="suivant" data-vers="s4">🎪 Le programme de la fête</button>
+    </section>
+
+    <!-- ========== 4. AU PROGRAMME ========== -->
+    <section class="scene" id="s4">
+      <div class="bulle bulle-large" data-anim>
+        <p class="etape">Étape 3 sur 9</p>
+        <p class="etiquette">🎪 Au programme</p>
+        <ul class="programme">
+          <li class="carte-prog" style="--i:0"><span class="emoji">🥚</span> Chasse aux œufs de dragon</li>
+          <li class="carte-prog" style="--i:1"><span class="emoji">👑</span> Atelier cornes et couronnes</li>
+          <li class="carte-prog" style="--i:2"><span class="emoji">🌋</span> Gâteau volcan</li>
+          <li class="carte-prog" style="--i:3"><span class="emoji">📸</span> Photo souvenir</li>
+        </ul>
+        <p class="deguisement">
+          Déguisement dragon ou licorne bienvenu<br />
+          (mais pas obligatoire) 🐉🦄
+        </p>
+      </div>
+      <button class="suivant" data-vers="s5">💌 Répondre à l'invitation</button>
+    </section>
+
+    <!-- ========== 5. LE RSVP ========== -->
+    <section class="scene" id="s5">
+      <div class="bulle" data-anim>
+        <p class="etape">Étape 4 sur 9</p>
+        <p class="etiquette">💌 Pour les parents</p>
+        <p class="phrase">Dis-nous si tu viens, avant le <strong data-champ="rsvp"></strong>.</p>
+        <a class="bouton bouton-sms" id="lien-sms" href="#">💬 Répondre par SMS</a>
+        <a class="lien-discret" id="lien-tel" href="#"></a>
+      </div>
+      <button class="suivant suivant-fort" data-vers="s6">🎮 Place aux jeux&nbsp;!</button>
+    </section>
+
+    <!-- ========== 6. JEU 1 — LE MEMORY ========== -->
+    <section class="scene" id="s6">
+      <div class="bulle bulle-large" data-anim>
+        <p class="etape">Jeu 1 sur 4</p>
+        <p class="etiquette">🧠 Les paires magiques</p>
+        <p class="regle">Retourne deux cartes. Si elles sont pareilles, tu gagnes&nbsp;!</p>
+
+        <div class="memory" id="memory"></div>
+
+        <p class="score" id="memory-score">Paires trouvées : 0 sur 6</p>
+        <button class="bouton bouton-rejouer" id="memory-rejouer" type="button">🔄 Recommencer</button>
+      </div>
+      <button class="suivant" data-vers="s7">⭐ Jeu suivant</button>
+    </section>
+
+    <!-- ========== 7. JEU 2 — ATTRAPE LES ÉTOILES ========== -->
+    <section class="scene" id="s7">
+      <div class="bulle bulle-large" data-anim>
+        <p class="etape">Jeu 2 sur 4</p>
+        <p class="etiquette">⭐ Attrape les étoiles</p>
+        <p class="regle">Touche les étoiles et les licornes avant qu'elles s'envolent&nbsp;!</p>
+
+        <div class="aire" id="aire">
+          <p class="aire-message" id="aire-message">Appuie sur « Jouer » 👇</p>
+        </div>
+
+        <div class="tableau-score">
+          <span>⏱️ <strong id="etoiles-temps">20</strong> s</span>
+          <span>🌟 <strong id="etoiles-score">0</strong> <span id="etoiles-mot">point</span></span>
+        </div>
+        <button class="bouton bouton-jouer" id="etoiles-jouer" type="button">▶️ Jouer</button>
+      </div>
+      <button class="suivant" data-vers="s8">🎨 Jeu suivant</button>
+    </section>
+
+    <!-- ========== 8. JEU 3 — COLORIE LE DRAGON ========== -->
+    <section class="scene" id="s8">
+      <div class="bulle bulle-large" data-anim>
+        <p class="etape">Jeu 3 sur 4</p>
+        <p class="etiquette">🎨 Colorie le dragon</p>
+        <p class="regle">Touche une partie du dragon pour changer sa couleur&nbsp;!</p>
+
+        <svg class="dragon-colo" id="dragon-colo" viewBox="0 0 220 170" role="img"
+             aria-label="Dragon à colorier">
+          <path class="zone" data-zone="queue" d="M24,132 C4,124 10,96 34,100 L46,118 Z" />
+          <ellipse class="zone" data-zone="corps" cx="98" cy="104" rx="56" ry="38" />
+          <ellipse class="zone" data-zone="ventre" cx="104" cy="118" rx="38" ry="22" />
+          <path class="zone" data-zone="crete" d="M56,76 l9,-16 l9,16 z M74,66 l10,-18 l10,18 z" />
+          <path class="zone" data-zone="aile" d="M100,98 C92,52 128,38 152,56 C136,64 120,76 112,98 Z" />
+          <rect class="zone" data-zone="pattes" x="72" y="134" width="20" height="24" rx="9" />
+          <rect class="zone" data-zone="pattes" x="110" y="134" width="20" height="24" rx="9" />
+          <circle class="zone" data-zone="corps" cx="166" cy="66" r="32" />
+          <path class="zone" data-zone="corne" d="M160,36 l6,-28 l10,26 z" />
+          <path class="zone" data-zone="corne" d="M182,42 l16,-20 l2,24 z" />
+          <ellipse class="museau" cx="192" cy="78" rx="20" ry="14" />
+          <circle class="narine" cx="198" cy="74" r="2.6" />
+          <circle class="oeil-blanc" cx="174" cy="58" r="7" />
+          <circle class="oeil-noir" cx="176" cy="59" r="3.4" />
+          <path class="sourire-dragon" d="M183,83 q9,8 17,-1" />
+        </svg>
+
+        <button class="bouton bouton-rejouer" id="dragon-reset" type="button">🧽 Tout effacer</button>
+      </div>
+      <button class="suivant" data-vers="s9">🔢 Dernier jeu</button>
+    </section>
+
+    <!-- ========== 9. JEU 4 — COMPTE LES LICORNES ========== -->
+    <section class="scene" id="s9">
+      <div class="bulle bulle-large" data-anim>
+        <p class="etape">Jeu 4 sur 4</p>
+        <p class="etiquette">🔢 Compte les licornes</p>
+        <p class="regle" id="compte-question">Combien vois-tu de licornes&nbsp;?</p>
+
+        <div class="champ" id="compte-champ"></div>
+        <div class="reponses" id="compte-reponses"></div>
+        <p class="score" id="compte-score">Manche 1 sur 3</p>
+      </div>
+      <button class="suivant suivant-fort" data-vers="s10">⏳ Dans combien de temps&nbsp;?</button>
+    </section>
+
+    <!-- ========== 10. LE COMPTE À REBOURS (LA FIN) ========== -->
+    <section class="scene scene-fin" id="s10">
+      <div class="bulle" data-anim>
+        <p class="etiquette">⏳ La fête, c'est dans…</p>
+
+        <div class="rebours" id="rebours">
+          <div class="case"><span class="chiffre" id="jours">--</span><span class="unite">jours</span></div>
+          <div class="case"><span class="chiffre" id="heures">--</span><span class="unite">heures</span></div>
+          <div class="case"><span class="chiffre" id="minutes">--</span><span class="unite">minutes</span></div>
+        </div>
+        <p class="secondes">…et <span id="secondes">--</span> secondes&nbsp;⏳</p>
+
+        <p class="rappel-date">
+          <strong data-champ="dateComplete"></strong><br />
+          <span data-champ="horaire"></span>
+        </p>
+
+        <p class="mot-fin">On compte sur toi&nbsp;!</p>
+        <p class="signature">Bisous,<br /><span data-champ="prenoms"></span></p>
+
+        <div class="duo">
+          <svg class="mascotte dino" viewBox="0 0 130 100" aria-label="Dragon" role="img">
+            <path class="d-queue" d="M18,78 C2,74 6,58 22,62" />
+            <ellipse class="d-corps" cx="58" cy="66" rx="38" ry="26" />
+            <rect class="d-patte" x="40" y="84" width="12" height="14" rx="5" />
+            <rect class="d-patte" x="68" y="84" width="12" height="14" rx="5" />
+            <path class="d-pics" d="M34,46 l8,-12 l8,12 z M52,40 l9,-14 l9,14 z" />
+            <path class="d-aile" d="M58,62 C54,30 82,22 94,38 C82,44 70,50 64,62 Z" />
+            <circle class="d-corps" cx="98" cy="42" r="21" />
+            <path class="d-corne" d="M96,22 l5,-16 l7,15 z" />
+            <circle class="oeil" cx="105" cy="37" r="4" />
+            <circle class="pupille" cx="106" cy="38" r="2" />
+            <path class="sourire" d="M96,50 q8,7 16,-1" />
+            <circle class="joue" cx="90" cy="50" r="4" />
+          </svg>
+
+          <svg class="mascotte licorne" viewBox="0 0 130 100" aria-label="Licorne" role="img">
+            <path class="l-queue" d="M22,62 q-16,12 -8,30" />
+            <ellipse class="l-corps" cx="56" cy="66" rx="36" ry="25" />
+            <rect class="l-patte" x="38" y="84" width="12" height="14" rx="5" />
+            <rect class="l-patte" x="66" y="84" width="12" height="14" rx="5" />
+            <g class="criniere">
+              <path d="M86,24 q-16,10 -20,36" stroke="#ff9aa2" />
+              <path d="M80,22 q-17,12 -22,38" stroke="#ffd59e" />
+              <path d="M74,24 q-17,12 -21,36" stroke="#b5ecd0" />
+              <path d="M68,28 q-15,12 -18,32" stroke="#a8d5ff" />
+            </g>
+            <circle class="l-corps" cx="96" cy="42" r="20" />
+            <path class="l-corne" d="M92,24 l10,-20 l6,19 z" />
+            <ellipse class="l-oreille" cx="82" cy="28" rx="5" ry="8" transform="rotate(-25 82 28)" />
+            <circle class="oeil" cx="105" cy="40" r="4" />
+            <circle class="pupille" cx="106" cy="41" r="2" />
+            <path class="sourire" d="M98,50 q8,7 16,-1" />
+            <circle class="joue joue-rose" cx="92" cy="51" r="4" />
+          </svg>
+        </div>
+
+        <button class="bouton bouton-fete" id="bouton-fete" type="button">🎊 Encore des confettis&nbsp;!</button>
+        <button class="suivant suivant-haut" data-vers="s1">↑ Revoir l'œuf</button>
+      </div>
+    </section>
+
+  </div><!-- /.ecran -->
+
+  <button class="bouton-son" id="bouton-son" type="button"
+          aria-pressed="false" aria-label="Activer la musique">🔇</button>
+
+</div><!-- /.cadre-telephone -->
+
+<script>
+/* ============================================================
+   INVITATION ANNIVERSAIRE — MIYA & NEYL
+   ------------------------------------------------------------
+   👉 TOUT CE QUI SE MODIFIE FACILEMENT EST JUSTE EN DESSOUS.
+      Change les valeurs entre guillemets, enregistre le fichier,
+      puis rafraîchis la page (F5). C'est tout !
+   ============================================================ */
+
+const INVITATION = {
+  // --- Les enfants ---
+  prenom1: "Miya",            // la licorne 🦄
+  prenom2: "Neyl",            // le dragon 🐉
+  nom: "Souprayen",
+  age: 5,
+  naissance: "18 novembre 2021",
+
+  // --- La fête ---
+  // Format : ANNÉE, MOIS - 1, JOUR, HEURE, MINUTE
+  // ⚠️ En JavaScript les mois commencent à 0 : novembre = 10.
+  dateFete: new Date(2026, 10, 21, 15, 0),
+  horaire: "de 15h00 à 17h30",
+  lieu: "9 impasse Euclide\n44800 Saint-Herblain",
+  rsvp: "14 novembre",
+
+  // --- Le contact des parents ---
+  telephone: "0686118665",
+  messageSms: "Bonjour ! Nous serons présents à l'anniversaire de Miya & Neyl le samedi 21 novembre. Prénom de l'enfant : ",
+};
+
+/* ============================================================
+   À PARTIR D'ICI, C'EST LA MÉCANIQUE.
+   C'est commenté, mais tu n'as pas besoin d'y toucher pour
+   changer les informations de la carte.
+   ============================================================ */
+
+const MOINS_ANIM = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const cadre    = document.getElementById("cadre");
+const ecran    = document.getElementById("ecran");
+const jauge    = document.getElementById("jauge");
+const piste    = document.getElementById("piste");
+const coucheConfettis = document.getElementById("confettis");
+
+
+/* ------------------------------------------------------------
+   1. REMPLIR LA PAGE AVEC LES INFOS DE L'INVITATION
+   ------------------------------------------------------------ */
+const JOURS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+const MOIS  = ["janvier", "février", "mars", "avril", "mai", "juin",
+               "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+
+const d = INVITATION.dateFete;
+
+const textes = {
+  prenom1:     INVITATION.prenom1,
+  prenom2:     INVITATION.prenom2,
+  prenoms:     INVITATION.prenom1 + " & " + INVITATION.prenom2,
+  nom:         INVITATION.nom,
+  age:         INVITATION.age,
+  naissance:   INVITATION.naissance,
+  jourSemaine: JOURS[d.getDay()],
+  jourNumero:  d.getDate(),
+  moisAnnee:   MOIS[d.getMonth()] + " " + d.getFullYear(),
+  dateComplete: JOURS[d.getDay()] + " " + d.getDate() + " " + MOIS[d.getMonth()] + " " + d.getFullYear(),
+  horaire:     INVITATION.horaire,
+  lieu:        INVITATION.lieu,
+  rsvp:        INVITATION.rsvp,
+};
+
+document.querySelectorAll("[data-champ]").forEach(function (element) {
+  const nom = element.dataset.champ;
+  if (textes[nom] !== undefined) element.textContent = textes[nom];
+});
+
+
+/* ------------------------------------------------------------
+   2. L'ICÔNE DE L'ONGLET (dessinée ici, aucun fichier image)
+   ------------------------------------------------------------ */
+const dessinIcone =
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>" +
+  "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'>" +
+  "<stop offset='50%' stop-color='#1f7a4d'/><stop offset='50%' stop-color='#f9cfe4'/></linearGradient>" +
+  "<clipPath id='c'><path d='M32 3c11 0 19 13 19 24 0 15-8 24-19 24S13 42 13 27C13 16 21 3 32 3z'/></clipPath></defs>" +
+  "<rect width='64' height='64' rx='14' fill='#2d1b40'/>" +
+  "<path d='M32 3c11 0 19 13 19 24 0 15-8 24-19 24S13 42 13 27C13 16 21 3 32 3z' fill='url(#g)' stroke='#fff' stroke-width='2.5'/>" +
+  "<g clip-path='url(#c)' fill='none' stroke='#0f5b38' stroke-width='2' opacity='.55'>" +
+  "<path d='M12 22a8 8 0 0 1 16 0'/><path d='M12 34a8 8 0 0 1 16 0'/><path d='M12 46a8 8 0 0 1 16 0'/></g>" +
+  "<g clip-path='url(#c)' fill='#e3b64f'>" +
+  "<circle cx='40' cy='20' r='2.6'/><circle cx='44' cy='34' r='2'/><circle cx='38' cy='44' r='2.3'/></g></svg>";
+
+const lienIcone = document.createElement("link");
+lienIcone.rel = "icon";
+lienIcone.type = "image/svg+xml";
+lienIcone.href = "data:image/svg+xml," + encodeURIComponent(dessinIcone);
+document.head.appendChild(lienIcone);
+
+
+/* ------------------------------------------------------------
+   3. LES BOUTONS « PLAN » ET « SMS »
+   ------------------------------------------------------------ */
+const adresse = encodeURIComponent(INVITATION.lieu.replace(/\n/g, " "));
+const lienMaps = "https://www.google.com/maps/search/?api=1&query=" + adresse;
+
+document.getElementById("lien-plan").href = lienMaps;
+document.getElementById("lien-google").href = lienMaps;
+
+// Le "?&body=" fonctionne à la fois sur iPhone et sur Android.
+document.getElementById("lien-sms").href =
+  "sms:" + INVITATION.telephone + "?&body=" + encodeURIComponent(INVITATION.messageSms);
+
+const lienTel = document.getElementById("lien-tel");
+lienTel.href = "tel:" + INVITATION.telephone;
+lienTel.textContent = "…ou appelle le " + INVITATION.telephone.replace(/(\d{2})(?=\d)/g, "$1 ");
+
+
+/* ------------------------------------------------------------
+   4. LES CONFETTIS
+   ------------------------------------------------------------ */
+const COULEURS = ["#ff9aa2", "#ffd59e", "#fdf0a0", "#b5ecd0",
+                  "#a8d5ff", "#cbb6f5", "#3aa06a", "#e3b64f"];
+
+function lancerConfettis(x, y, nombre) {
+  if (MOINS_ANIM) return;
+
+  for (let i = 0; i < nombre; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = x + "px";
+    c.style.top = y + "px";
+    c.style.background = COULEURS[i % COULEURS.length];
+
+    const duree = 1.6 + Math.random() * 1.6;
+    c.style.setProperty("--dx", (Math.random() * 320 - 160) + "px");
+    c.style.setProperty("--dy", (160 + Math.random() * 380) + "px");
+    c.style.setProperty("--tour", (Math.random() * 900 - 450) + "deg");
+    c.style.animationDuration = duree + "s";
+    c.style.animationDelay = (Math.random() * .25) + "s";
+    if (i % 3 === 0) c.style.borderRadius = "50%";
+
+    coucheConfettis.appendChild(c);
+    setTimeout(function () { c.remove(); }, (duree + .5) * 1000);
+  }
+}
+
+// Lancer les confettis depuis le centre d'un élément.
+function confettisDepuis(element, nombre) {
+  const zoneCadre = cadre.getBoundingClientRect();
+  const zone = element.getBoundingClientRect();
+  lancerConfettis(
+    zone.left - zoneCadre.left + zone.width / 2,
+    zone.top - zoneCadre.top + zone.height / 2,
+    nombre
+  );
+}
+
+
+/* ------------------------------------------------------------
+   5. L'ŒUF : 3 TAPES POUR LE FAIRE ÉCLORE
+   ------------------------------------------------------------ */
+const oeuf       = document.getElementById("oeuf");
+const consigne   = document.getElementById("consigne");
+const consigneTexte = document.getElementById("consigne-texte");
+const revelation = document.getElementById("revelation");
+const pointsCoups = document.querySelectorAll("#coups .coup");
+
+let tapes = 0;
+
+oeuf.addEventListener("click", function () {
+  if (oeuf.classList.contains("ouvert")) {
+    confettisDepuis(oeuf, 26);
+    return;
+  }
+
+  tapes++;
+
+  // Le petit tremblement (l'astuce du void sert à rejouer l'animation)
+  oeuf.classList.remove("secoue");
+  void oeuf.offsetWidth;
+  oeuf.classList.add("secoue");
+  jouerNote(tapes);
+
+  if (tapes <= 3) {
+    oeuf.classList.add("tap" + tapes);
+    pointsCoups[tapes - 1].classList.add("fait");
+    if (tapes === 1) consigneTexte.innerHTML = "Encore <strong>2 fois</strong>&nbsp;!";
+    if (tapes === 2) consigneTexte.innerHTML = "Encore <strong>1 fois</strong>&nbsp;!";
+    if (tapes === 3) consigneTexte.innerHTML = "Ça craque…&nbsp;!";
+  }
+
+  if (tapes === 3) setTimeout(ouvrirOeuf, 550);
+});
+
+function ouvrirOeuf() {
+  oeuf.classList.add("ouvert");
+  consigne.classList.add("parti");
+  revelation.classList.add("visible");
+  confettisDepuis(oeuf, 70);
+  jouerFanfare();
+}
+
+// Si personne ne touche l'œuf au bout de 5 s, il bouge tout seul pour attirer l'œil.
+setInterval(function () {
+  if (tapes === 0 && !MOINS_ANIM) {
+    oeuf.classList.add("secoue");
+    setTimeout(function () { oeuf.classList.remove("secoue"); }, 500);
+  }
+}, 5000);
+
+
+/* ------------------------------------------------------------
+   6. LES BOUTONS « SECTION SUIVANTE »
+   Ils font glisser l'écran jusqu'à la section annoncée.
+   ------------------------------------------------------------ */
+document.querySelectorAll(".suivant").forEach(function (bouton) {
+  bouton.addEventListener("click", function () {
+    const cible = document.getElementById(bouton.dataset.vers);
+    if (cible) ecran.scrollTo({ top: cible.offsetTop, behavior: MOINS_ANIM ? "auto" : "smooth" });
+  });
+});
+
+
+/* ------------------------------------------------------------
+   7. LES PRÉNOMS QUI REBONDISSENT
+   ------------------------------------------------------------ */
+document.querySelectorAll("[data-rebond]").forEach(function (element) {
+  element.addEventListener("click", function () {
+    element.classList.remove("rebond");
+    void element.offsetWidth;
+    element.classList.add("rebond");
+    confettisDepuis(element, 14);
+    jouerNote(3);
+  });
+});
+
+document.getElementById("bouton-fete").addEventListener("click", function () {
+  lancerConfettis(cadre.clientWidth / 2, 40, 90);
+  jouerFanfare();
+});
+
+
+/* ------------------------------------------------------------
+   8. LES SECTIONS QUI APPARAISSENT EN DOUCEUR
+   IntersectionObserver = un « guetteur » qui prévient le code
+   quand un élément entre dans l'écran.
+   ------------------------------------------------------------ */
+const guetteur = new IntersectionObserver(function (entrees) {
+  entrees.forEach(function (e) {
+    if (e.isIntersecting) e.target.classList.add("visible");
+  });
+}, { root: ecran, threshold: .2 });
+
+document.querySelectorAll("[data-anim]").forEach(function (el) { guetteur.observe(el); });
+
+
+/* ------------------------------------------------------------
+   9. LA PISTE D'EMPREINTES + LA BARRE D'AVANCEMENT
+   ------------------------------------------------------------ */
+const NB_PAS = 14;
+const marques = [];
+
+for (let i = 0; i < NB_PAS; i++) {
+  const pas = document.createElement("span");
+  pas.className = "pas";
+  pas.textContent = i < NB_PAS / 2 ? "🐾" : "✨";
+  pas.style.transform += " translateX(" + (i % 2 === 0 ? -5 : 5) + "px)";
+  piste.appendChild(pas);
+  marques.push(pas);
+}
+
+let calculEnCours = false;
+
+ecran.addEventListener("scroll", function () {
+  if (calculEnCours) return;
+  calculEnCours = true;
+
+  requestAnimationFrame(function () {
+    const hauteur = ecran.scrollHeight - ecran.clientHeight;
+    const avancement = hauteur > 0 ? ecran.scrollTop / hauteur : 0;
+
+    cadre.style.setProperty("--fusion", avancement.toFixed(3));
+    jauge.style.width = (avancement * 100).toFixed(1) + "%";
+
+    const vus = Math.round(avancement * NB_PAS);
+    marques.forEach(function (pas, i) { pas.classList.toggle("vue", i < vus); });
+
+    calculEnCours = false;
+  });
+});
+
+
+/* ============================================================
+   LES JEUX 🎮
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   JEU 1 : LE MEMORY
+   6 paires d'images mélangées. On retourne deux cartes :
+   si elles sont identiques, elles restent visibles.
+   ------------------------------------------------------------ */
+const SYMBOLES = ["🦄", "🐉", "🥚", "🌈", "⭐", "🌋"];
+
+const grilleMemory = document.getElementById("memory");
+const scoreMemory  = document.getElementById("memory-score");
+
+let carteRetournee = null;   // la première carte retournée
+let blocage = false;         // empêche de cliquer pendant l'animation
+let pairesTrouvees = 0;
+
+// Mélanger une liste (on tire au sort, comme pour battre des cartes)
+function melanger(liste) {
+  const copie = liste.slice();
+  for (let i = copie.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = copie[i]; copie[i] = copie[j]; copie[j] = temp;
+  }
+  return copie;
+}
+
+function nouveauMemory() {
+  grilleMemory.innerHTML = "";
+  carteRetournee = null;
+  blocage = false;
+  pairesTrouvees = 0;
+  scoreMemory.textContent = "Paires trouvées : 0 sur 6";
+  scoreMemory.classList.remove("gagne");
+
+  // Chaque symbole en double, puis on mélange le tout
+  melanger(SYMBOLES.concat(SYMBOLES)).forEach(function (symbole) {
+    const carte = document.createElement("button");
+    carte.type = "button";
+    carte.className = "carte-memo";
+    carte.dataset.symbole = symbole;
+    carte.setAttribute("aria-label", "Carte à retourner");
+    carte.addEventListener("click", function () { retournerCarte(carte); });
+    grilleMemory.appendChild(carte);
+  });
+}
+
+function retournerCarte(carte) {
+  if (blocage) return;
+  if (carte.classList.contains("retournee") || carte.classList.contains("trouvee")) return;
+
+  carte.classList.add("retournee");
+  carte.textContent = carte.dataset.symbole;
+  jouerNote(2);
+
+  // Première carte du tour : on la met de côté et on attend la suivante.
+  if (!carteRetournee) { carteRetournee = carte; return; }
+
+  // Deuxième carte : on compare.
+  if (carteRetournee.dataset.symbole === carte.dataset.symbole) {
+    carte.classList.add("trouvee");
+    carteRetournee.classList.add("trouvee");
+    carteRetournee = null;
+    pairesTrouvees++;
+    scoreMemory.textContent = "Paires trouvées : " + pairesTrouvees + " sur 6";
+    confettisDepuis(carte, 16);
+
+    if (pairesTrouvees === 6) {
+      scoreMemory.textContent = "Bravo ! Tout trouvé ! 🏆";
+      scoreMemory.classList.add("gagne");
+      confettisDepuis(grilleMemory, 60);
+      jouerFanfare();
+    }
+  } else {
+    // Pas pareilles : on les retourne après une petite seconde.
+    blocage = true;
+    const premiere = carteRetournee;
+    carteRetournee = null;
+    setTimeout(function () {
+      premiere.classList.remove("retournee");
+      carte.classList.remove("retournee");
+      premiere.textContent = "";
+      carte.textContent = "";
+      blocage = false;
+    }, 900);
+  }
+}
+
+document.getElementById("memory-rejouer").addEventListener("click", nouveauMemory);
+nouveauMemory();
+
+
+/* ------------------------------------------------------------
+   JEU 2 : ATTRAPE LES ÉTOILES
+   Des étoiles apparaissent 20 secondes durant. Il faut les
+   toucher avant qu'elles disparaissent.
+   ------------------------------------------------------------ */
+const CIBLES = ["⭐", "🌟", "🦄", "🐉", "✨", "🌈"];
+
+const aire        = document.getElementById("aire");
+const aireMessage = document.getElementById("aire-message");
+const boutonJouer = document.getElementById("etoiles-jouer");
+const afficheTemps = document.getElementById("etoiles-temps");
+const afficheScore = document.getElementById("etoiles-score");
+const motPoint     = document.getElementById("etoiles-mot");
+
+// En français, « point » prend un s à partir de 2. On s'en occupe ici.
+function majScoreEtoiles() {
+  afficheScore.textContent = pointsEtoiles;
+  motPoint.textContent = pointsEtoiles > 1 ? "points" : "point";
+}
+
+let pointsEtoiles = 0;
+let tempsRestant = 20;
+let minuteurEtoiles = null;
+let apparitionsEtoiles = null;
+
+function demarrerEtoiles() {
+  arreterEtoiles();
+
+  pointsEtoiles = 0;
+  tempsRestant = 20;
+  majScoreEtoiles();
+  afficheTemps.textContent = "20";
+  aireMessage.style.display = "none";
+  boutonJouer.textContent = "⏳ En cours…";
+  boutonJouer.disabled = true;
+
+  // Une étoile toutes les 0,65 seconde
+  apparitionsEtoiles = setInterval(faireApparaitre, 650);
+  faireApparaitre();
+
+  // Le chronomètre
+  minuteurEtoiles = setInterval(function () {
+    tempsRestant--;
+    afficheTemps.textContent = tempsRestant;
+    if (tempsRestant <= 0) terminerEtoiles();
+  }, 1000);
+}
+
+function faireApparaitre() {
+  const cible = document.createElement("button");
+  cible.type = "button";
+  cible.className = "cible";
+  cible.textContent = CIBLES[Math.floor(Math.random() * CIBLES.length)];
+  cible.setAttribute("aria-label", "Attraper");
+
+  // Une position au hasard dans l'aire de jeu (en laissant une marge)
+  cible.style.left = (8 + Math.random() * 74) + "%";
+  cible.style.top  = (8 + Math.random() * 70) + "%";
+
+  cible.addEventListener("click", function () {
+    if (cible.classList.contains("touchee")) return;
+    cible.classList.add("touchee");
+    pointsEtoiles++;
+    majScoreEtoiles();
+    jouerNote(3);
+    setTimeout(function () { cible.remove(); }, 300);
+  });
+
+  aire.appendChild(cible);
+
+  // Si personne ne l'attrape, elle s'en va toute seule.
+  setTimeout(function () { cible.remove(); }, 1700);
+}
+
+function terminerEtoiles() {
+  arreterEtoiles();
+  aire.querySelectorAll(".cible").forEach(function (c) { c.remove(); });
+
+  aireMessage.style.display = "flex";
+  aireMessage.innerHTML = "Bravo&nbsp;! Tu as attrapé<br />" + pointsEtoiles +
+                          (pointsEtoiles > 1 ? " étoiles 🌟" : " étoile 🌟");
+  boutonJouer.textContent = "🔄 Rejouer";
+  boutonJouer.disabled = false;
+
+  if (pointsEtoiles > 0) { confettisDepuis(aire, 40); jouerFanfare(); }
+}
+
+function arreterEtoiles() {
+  clearInterval(minuteurEtoiles);
+  clearInterval(apparitionsEtoiles);
+}
+
+boutonJouer.addEventListener("click", demarrerEtoiles);
+
+
+/* ------------------------------------------------------------
+   JEU 3 : COLORIE LE DRAGON
+   Chaque partie du dragon change de couleur quand on la touche.
+   ------------------------------------------------------------ */
+const PALETTE = ["#7bd389", "#6cc5f0", "#f58fc0", "#ffd166", "#b79cf0",
+                 "#ff8e72", "#5ecfc0", "#ece6f5"];
+
+const zonesDragon = document.querySelectorAll("#dragon-colo .zone");
+
+// Chaque partie du dragon porte un nom (data-zone dans le HTML).
+// Les deux pattes, par exemple, portent le même nom : elles se
+// colorient donc ensemble, c'est plus joli.
+const couleurDeLaZone = {};   // ex : { corps: 3, aile: 0, ... }
+
+zonesDragon.forEach(function (zone) {
+  const nom = zone.dataset.zone;
+  couleurDeLaZone[nom] = 7;    // 7 = le gris du départ
+  zone.setAttribute("tabindex", "0");
+  zone.setAttribute("role", "button");
+  zone.setAttribute("aria-label", "Colorier : " + nom);
+
+  zone.addEventListener("click", function () { colorier(nom); });
+  // Au clavier, la touche Entrée fait la même chose qu'un clic.
+  zone.addEventListener("keydown", function (e) {
+    if (e.key === "Enter" || e.key === " ") { e.preventDefault(); colorier(nom); }
+  });
+});
+
+function colorier(nom) {
+  // On avance d'une couleur dans la palette, puis on revient au début.
+  couleurDeLaZone[nom] = (couleurDeLaZone[nom] + 1) % PALETTE.length;
+  peindre(nom, PALETTE[couleurDeLaZone[nom]]);
+  jouerNote(2);
+}
+
+// Peindre toutes les parties qui portent le même nom
+function peindre(nom, couleur) {
+  zonesDragon.forEach(function (zone) {
+    if (zone.dataset.zone === nom) zone.style.fill = couleur;
+  });
+}
+
+document.getElementById("dragon-reset").addEventListener("click", function () {
+  for (const nom in couleurDeLaZone) {
+    couleurDeLaZone[nom] = 7;
+    peindre(nom, PALETTE[7]);
+  }
+});
+
+
+/* ------------------------------------------------------------
+   JEU 4 : COMPTE LES LICORNES
+   Trois manches : on compte les licornes cachées parmi les dragons.
+   ------------------------------------------------------------ */
+const champ     = document.getElementById("compte-champ");
+const reponses  = document.getElementById("compte-reponses");
+const scoreCompte = document.getElementById("compte-score");
+const question  = document.getElementById("compte-question");
+
+let manche = 1;
+let bonnesReponses = 0;
+
+function nouvelleManche() {
+  champ.innerHTML = "";
+  reponses.innerHTML = "";
+  question.innerHTML = "Combien vois-tu de licornes&nbsp;? 🦄";
+  scoreCompte.textContent = "Manche " + manche + " sur 3";
+  scoreCompte.classList.remove("gagne");
+
+  // Entre 2 et 6 licornes, mélangées à des dragons et des étoiles
+  const nbLicornes = 2 + Math.floor(Math.random() * 5);
+  const nbAutres   = 3 + Math.floor(Math.random() * 5);
+
+  const dessins = [];
+  for (let i = 0; i < nbLicornes; i++) dessins.push("🦄");
+  for (let i = 0; i < nbAutres; i++)   dessins.push(Math.random() < .5 ? "🐉" : "⭐");
+
+  melanger(dessins).forEach(function (emoji) {
+    const s = document.createElement("span");
+    s.textContent = emoji;
+    champ.appendChild(s);
+  });
+
+  // Trois réponses possibles : la bonne et deux voisines
+  const choix = [nbLicornes];
+  while (choix.length < 3) {
+    const essai = Math.max(1, nbLicornes + Math.floor(Math.random() * 5) - 2);
+    if (choix.indexOf(essai) === -1) choix.push(essai);
+  }
+
+  melanger(choix).forEach(function (valeur) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "reponse";
+    b.textContent = valeur;
+    b.addEventListener("click", function () { verifier(b, valeur === nbLicornes); });
+    reponses.appendChild(b);
+  });
+}
+
+function verifier(bouton, estJuste) {
+  // On bloque les boutons pour éviter les doubles clics.
+  reponses.querySelectorAll(".reponse").forEach(function (b) { b.disabled = true; });
+
+  if (estJuste) {
+    bouton.classList.add("juste");
+    bonnesReponses++;
+    scoreCompte.textContent = "Bravo ! 🎉";
+    scoreCompte.classList.add("gagne");
+    confettisDepuis(champ, 26);
+    jouerNote(3);
+  } else {
+    bouton.classList.add("faux");
+    scoreCompte.textContent = "Presque ! Essaie la manche suivante.";
+    jouerNote(1);
+  }
+
+  setTimeout(function () {
+    if (manche < 3) {
+      manche++;
+      nouvelleManche();
+    } else {
+      champ.innerHTML = "<span>🏆</span>";
+      reponses.innerHTML = "";
+      question.textContent = "Partie terminée !";
+      scoreCompte.textContent = bonnesReponses + " bonne(s) réponse(s) sur 3";
+      scoreCompte.classList.add("gagne");
+      confettisDepuis(champ, 50);
+      jouerFanfare();
+
+      // Un bouton pour recommencer la partie
+      const rejouer = document.createElement("button");
+      rejouer.type = "button";
+      rejouer.className = "bouton bouton-rejouer";
+      rejouer.textContent = "🔄 Rejouer";
+      rejouer.addEventListener("click", function () {
+        manche = 1;
+        bonnesReponses = 0;
+        nouvelleManche();
+      });
+      reponses.appendChild(rejouer);
+    }
+  }, 1600);
+}
+
+nouvelleManche();
+
+
+/* ------------------------------------------------------------
+   LE COMPTE À REBOURS (tout à la fin de l'invitation)
+   ------------------------------------------------------------ */
+const cases = {
+  jours:    document.getElementById("jours"),
+  heures:   document.getElementById("heures"),
+  minutes:  document.getElementById("minutes"),
+  secondes: document.getElementById("secondes"),
+};
+
+function majRebours() {
+  const restant = INVITATION.dateFete - new Date();
+
+  if (restant <= 0) {
+    cases.jours.textContent = "0";
+    cases.heures.textContent = "0";
+    cases.minutes.textContent = "0";
+    cases.secondes.textContent = "0";
+    document.querySelector(".secondes").textContent = "C'est aujourd'hui ! 🎉";
+    return;
+  }
+
+  const total = Math.floor(restant / 1000);
+  const valeurs = {
+    jours:    Math.floor(total / 86400),
+    heures:   Math.floor(total / 3600) % 24,
+    minutes:  Math.floor(total / 60) % 60,
+    secondes: total % 60,
+  };
+
+  for (const nom in valeurs) {
+    const c = cases[nom];
+    const nouvelle = String(valeurs[nom]);
+    if (c.textContent !== nouvelle) {
+      c.textContent = nouvelle;
+      if (nom !== "secondes" && !MOINS_ANIM) {
+        c.classList.remove("pulse");
+        void c.offsetWidth;
+        c.classList.add("pulse");
+      }
+    }
+  }
+}
+
+majRebours();
+setInterval(majRebours, 1000);
+
+
+/* ------------------------------------------------------------
+   LA PETITE MUSIQUE (coupée au départ)
+   Aucun fichier son : les notes sont fabriquées par le navigateur.
+   ------------------------------------------------------------ */
+const boutonSon = document.getElementById("bouton-son");
+
+let audio = null;
+let sonActive = false;
+let boucleMusique = null;
+
+const MELODIE = [523.25, 659.25, 783.99, 659.25, 587.33, 783.99, 880.00, 783.99];
+let indexNote = 0;
+
+function preparerAudio() {
+  if (!audio) {
+    const Studio = window.AudioContext || window.webkitAudioContext;
+    if (!Studio) return false;
+    audio = new Studio();
+  }
+  if (audio.state === "suspended") audio.resume();
+  return true;
+}
+
+function jouerNote(hauteur) {
+  if (!sonActive || !preparerAudio()) return;
+  emettre(392 * hauteur, .18, .12);
+}
+
+function jouerFanfare() {
+  if (!sonActive || !preparerAudio()) return;
+  [523.25, 659.25, 783.99, 1046.5].forEach(function (note, i) {
+    setTimeout(function () { emettre(note, .3, .16); }, i * 120);
+  });
+}
+
+function emettre(frequence, duree, volume) {
+  const note = audio.createOscillator();
+  const gain = audio.createGain();
+  note.type = "triangle";
+  note.frequency.value = frequence;
+  gain.gain.setValueAtTime(volume, audio.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + duree);
+  note.connect(gain);
+  gain.connect(audio.destination);
+  note.start();
+  note.stop(audio.currentTime + duree);
+}
+
+boutonSon.addEventListener("click", function () {
+  sonActive = !sonActive;
+  boutonSon.setAttribute("aria-pressed", sonActive ? "true" : "false");
+  boutonSon.textContent = sonActive ? "🔊" : "🔇";
+  boutonSon.setAttribute("aria-label", sonActive ? "Couper la musique" : "Activer la musique");
+
+  if (sonActive) {
+    preparerAudio();
+    boucleMusique = setInterval(function () {
+      emettre(MELODIE[indexNote], .45, .07);
+      indexNote = (indexNote + 1) % MELODIE.length;
+    }, 480);
+  } else {
+    clearInterval(boucleMusique);
+  }
+});
+
+</script>
+</body>
+</html>
